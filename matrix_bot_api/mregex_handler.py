@@ -4,6 +4,7 @@ Defines a matrix bot handler that uses regex to determine if message should be h
 import re
 
 from matrix_bot_api.mhandler import MHandler
+from IgnoreList import *
 
 
 class MRegexHandler(MHandler):
@@ -16,7 +17,17 @@ class MRegexHandler(MHandler):
         self.regex_str = regex_str
 
     def test_regex(self, room, event):
+        allIgnored = GetGlobalIgnoreList;
+        thisRoomsIgnoreList = -1
+        for roomIgnore in allIgnored: # find this room from all rooms
+            if roomIgnore.roomID == room:
+                thisRoomsIgnoreList = roomIgnore.ignoredUsers
+                break
+        if thisRoomsIgnoreList == -1: # room doesn't have an entry!
+            
         # Test the message and see if it matches the regex
+        if event['sender'] == "@jarvis:eaton.uk.net" or event['sender'] == "@chucklebot:eaton.uk.net":
+            return False
         if event['type'] == "m.room.message":
             if re.search(self.regex_str, event['content']['body']):
                 # The message matches the regex, return true
