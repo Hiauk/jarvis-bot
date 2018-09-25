@@ -9,7 +9,7 @@ from matrix_bot_api.mregex_handler import MRegexHandler
 from matrix_bot_api.mcommand_handler import MCommandHandler
 
 script_dir = os.path.dirname(__file__) # Absolute path to this script
-config = yaml.safe_load(open(script_dir + "\config.yml"))
+config = yaml.safe_load(open(script_dir + "config.yml"))
 USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
@@ -100,9 +100,9 @@ def main():
     bot.start_polling()
 
     # Infinitely read stdin to stall main thread while the bot runs in other threads
-    while True:
-        input()
-
+    go = True
+    while go:
+        go = True
 
 if __name__ == "__main__":
     main()
