@@ -8,11 +8,13 @@ from matrix_bot_api.matrix_bot_api import MatrixBotAPI
 from matrix_bot_api.mregex_handler import MRegexHandler
 from matrix_bot_api.mcommand_handler import MCommandHandler
 
-config = yaml.safe_load(open("config.yml"))
+script_dir = os.path.dirname(__file__) # Absolute path to this script
+config = yaml.safe_load(open(script_dir + "\config.yml"))
 USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
 
+userIgnoreList = ['@ChuckleBot'];
 
 def hi_callback(room, event):
     # Somebody said hi, let's say Hi back
@@ -64,6 +66,16 @@ def trains_callback(room, event):
 
     room.send_text(output)
 
+def IgnoreUser_callback(room, event):
+    args = event['content']['body'].split()
+    modifier = args[1] #either add, a or remove, r
+    ignoreUser = args[2] #username of person to add / remove
+    if modifier == "a" or modifier == "add":
+        userIgnoreList.append(ignoreUser)
+        room.send_text("Now ignoring user: " + ignoreUser)
+    elif modifier == "r" or modifier == "remove":
+        userIgnoreList.remove(ignoreUser)
+        room.send_text("Now listening to user: " + ignoreUser)
 
 def main():
     # Create an instance of the MatrixBotAPI
@@ -80,6 +92,9 @@ def main():
 
     trains_handler = MCommandHandler("trains", trains_callback)
     bot.add_handler(trains_handler)
+
+    ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
+    bot.add_handler(ignoreUser_handler)
 
     # Start polling
     bot.start_polling()
