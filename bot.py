@@ -7,14 +7,13 @@ import yaml
 from matrix_bot_api.matrix_bot_api import MatrixBotAPI
 from matrix_bot_api.mregex_handler import MRegexHandler
 from matrix_bot_api.mcommand_handler import MCommandHandler
+from IgnoreList import *
 
 script_dir = os.path.dirname(__file__) # Absolute path to this script
 config = yaml.safe_load(open(script_dir + "\config.yml"))
 USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
-
-userIgnoreList = ['@ChuckleBot'];
 
 def hi_callback(room, event):
     # Somebody said hi, let's say Hi back
