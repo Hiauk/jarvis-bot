@@ -76,11 +76,6 @@ def IgnoreUser_callback(room, event):
     elif modifier == "r" or modifier == "remove":
         userIgnoreList.remove(ignoreUser)
         room.send_text("Now listening to user: " + ignoreUser)
-    
-    
-    
-
-
 
 def main():
     # Create an instance of the MatrixBotAPI
