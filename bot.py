@@ -15,10 +15,6 @@ USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
 
-#temp = IgnoreList("TestRoom", ['tom','help'])
-#GlobalIgnoreLists.append(temp)
-#SaveIgnoreList()
-
 def hi_callback(room, event):
     # Somebody said hi, let's say Hi back
     room.send_text("Hi, " + event['sender'])

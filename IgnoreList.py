@@ -5,7 +5,6 @@ script_dir = os.path.dirname(__file__) # Absolute path to this script
 config = yaml.safe_load(open(script_dir + "\config.yml"))
 ignoreListName = config['ignorelist']
 
-
 class IgnoreList:
     GlobalIgnoreLists = []
     def __init__(self, roomID, ignoredUsers):
@@ -42,6 +41,7 @@ class IgnoreList:
     def GetGlobalIgnoreList():
         return IgnoreList.GlobalIgnoreLists
 
+# Should this go in bot.py, maybe create a seperate config Init file?
 fileExists = os.path.isfile(script_dir + "\\" + ignoreListName + ".pkl");
 if fileExists == False:
     IgnoreList.SaveIgnoreList() # generate a blank pickle file
