@@ -17,7 +17,7 @@ class MRegexHandler(MHandler):
         self.regex_str = regex_str
 
     def test_regex(self, room, event):       
-        if CheckIgnoreSender(event['sender']) == True: #if the user is in the ignore list
+        if CheckIgnoreSender(room, event['sender']) == True: #if the user is in the ignore list            
             return False
         # Test the message and see if it matches the regex
         if event['sender'] == "@jarvis:eaton.uk.net" or event['sender'] == "@chucklebot:eaton.uk.net":
@@ -30,11 +30,15 @@ class MRegexHandler(MHandler):
         return False
 
 def CheckIgnoreSender(room, sender):
-    allIgnored = GetGlobalIgnoreList
-    thisRoomsIgnoreList = -1
+    allIgnored = IgnoreList.GetGlobalIgnoreList()
+    roomExists = False
     for roomIgnore in allIgnored: # find this room from all rooms
-        if roomIgnore.roomID == room:
-            thisRoomsIgnoreList = roomIgnore.ignoredUsers
-            break
-    if thisRoomsIgnoreList == -1: # room doesn't have an entry!
-        AddNewRoom(room)
+        if roomIgnore.roomID == room.room_id:
+            roomExists = True
+            for ignoredUser in roomIgnore.ignoredUsers:
+                if sender == ignoredUser:
+                    return True
+
+    if roomExists == False: #if the room (and hence user) did not exist
+        IgnoreList.AddNewRoom(room.room_id) #create empty room entry
+    return False # we fell through the for loop looking for user, this is always false

@@ -15,6 +15,10 @@ USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
 
+#temp = IgnoreList("TestRoom", ['tom','help'])
+#GlobalIgnoreLists.append(temp)
+#SaveIgnoreList()
+
 def hi_callback(room, event):
     # Somebody said hi, let's say Hi back
     room.send_text("Hi, " + event['sender'])
@@ -65,15 +69,16 @@ def trains_callback(room, event):
 
     room.send_text(output)
 
+    #TODO: Tie command functionality into user power levels
 def IgnoreUser_callback(room, event):
-    args = event['content']['body'].split()
+    args = event['content']['body'].split() #TODO: Data validation / input hardening
     modifier = args[1] #either add, a or remove, r
     ignoreUser = args[2] #username of person to add / remove
     if modifier == "a" or modifier == "add":
-        userIgnoreList.append(ignoreUser)
+        IgnoreList.AddUser(room.room_id, ignoreUser)
         room.send_text("Now ignoring user: " + ignoreUser)
     elif modifier == "r" or modifier == "remove":
-        userIgnoreList.remove(ignoreUser)
+        IgnoreList.RemoveUser(room.room_id, ignoreUser)
         room.send_text("Now listening to user: " + ignoreUser)
 
 def main():
