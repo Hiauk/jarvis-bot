@@ -16,15 +16,9 @@ class MRegexHandler(MHandler):
         MHandler.__init__(self, self.test_regex, handle_callback)
         self.regex_str = regex_str
 
-    def test_regex(self, room, event):
-        allIgnored = GetGlobalIgnoreList;
-        thisRoomsIgnoreList = -1
-        for roomIgnore in allIgnored: # find this room from all rooms
-            if roomIgnore.roomID == room:
-                thisRoomsIgnoreList = roomIgnore.ignoredUsers
-                break
-        if thisRoomsIgnoreList == -1: # room doesn't have an entry!
-            
+    def test_regex(self, room, event):       
+        if CheckIgnoreSender(event['sender']) == True: #if the user is in the ignore list
+            return False
         # Test the message and see if it matches the regex
         if event['sender'] == "@jarvis:eaton.uk.net" or event['sender'] == "@chucklebot:eaton.uk.net":
             return False
@@ -34,3 +28,13 @@ class MRegexHandler(MHandler):
                 return True
 
         return False
+
+def CheckIgnoreSender(room, sender):
+    allIgnored = GetGlobalIgnoreList
+    thisRoomsIgnoreList = -1
+    for roomIgnore in allIgnored: # find this room from all rooms
+        if roomIgnore.roomID == room:
+            thisRoomsIgnoreList = roomIgnore.ignoredUsers
+            break
+    if thisRoomsIgnoreList == -1: # room doesn't have an entry!
+        AddNewRoom(room)

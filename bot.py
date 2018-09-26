@@ -22,7 +22,7 @@ def hi_callback(room, event):
 def echo_callback(room, event):
     args = event['content']['body'].split()
     args.pop(0)
-
+    
     # Echo what they said back
     room.send_text(' '.join(args))
 
