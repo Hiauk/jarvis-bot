@@ -30,7 +30,7 @@ class MatrixBotAPI:
 
         # Store empty list of handlers
         self.handlers = []
-
+        
         # If rooms is None, we should listen for invites and automatically accept them
         if rooms is None:
             self.client.add_invite_listener(self.handle_invite)
@@ -40,15 +40,17 @@ class MatrixBotAPI:
             for room_id, room in self.client.get_rooms().items():
                 room.add_listener(self.handle_message)
                 self.rooms.append(room_id)
+                #if room_id == "!tukvxnciRWDbYQTSdw:eaton.uk.net": #Startup Message Example
+                   #room.send_text("This is a startup message going out to my fellow bot Devs")  
         else:
             # Add the message callback for all specified rooms
             for room in self.rooms:
                 room.add_listener(self.handle_message)
-
+                
     def add_handler(self, handler):
         self.handlers.append(handler)
 
-    def handle_message(self, room, event):
+    def handle_message(self, room, event): # this is where the ignore check should really take place
         # Make sure we didn't send this message
         if re.match("@" + self.username, event['sender']):
             return

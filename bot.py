@@ -22,7 +22,7 @@ def hi_callback(room, event):
 def echo_callback(room, event):
     args = event['content']['body'].split()
     args.pop(0)
-
+    
     # Echo what they said back
     room.send_text(' '.join(args))
 
@@ -65,15 +65,16 @@ def trains_callback(room, event):
 
     room.send_text(output)
 
+    #TODO: Tie command functionality into user power levels
 def IgnoreUser_callback(room, event):
-    args = event['content']['body'].split()
+    args = event['content']['body'].split() #TODO: Data validation / input hardening
     modifier = args[1] #either add, a or remove, r
     ignoreUser = args[2] #username of person to add / remove
     if modifier == "a" or modifier == "add":
-        userIgnoreList.append(ignoreUser)
+        IgnoreList.AddUser(room.room_id, ignoreUser)
         room.send_text("Now ignoring user: " + ignoreUser)
     elif modifier == "r" or modifier == "remove":
-        userIgnoreList.remove(ignoreUser)
+        IgnoreList.RemoveUser(room.room_id, ignoreUser)
         room.send_text("Now listening to user: " + ignoreUser)
 
 def main():
