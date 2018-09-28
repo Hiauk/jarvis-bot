@@ -2,6 +2,7 @@ import traceback
 import re
 from matrix_client.client import MatrixClient
 from matrix_client.api import MatrixRequestError
+from IgnoreList import *
 
 
 class MatrixBotAPI:
@@ -50,11 +51,26 @@ class MatrixBotAPI:
     def add_handler(self, handler):
         self.handlers.append(handler)
 
+    def CheckIgnoreSender(room, sender):
+        allIgnored = IgnoreList.GetGlobalIgnoreList()
+        roomExists = False
+        for roomIgnore in allIgnored: # find this room from all rooms
+            if roomIgnore.roomID == room.room_id:
+                roomExists = True
+                for ignoredUser in roomIgnore.ignoredUsers:
+                    if sender == ignoredUser:
+                        return True
+        if roomExists == False: #if the room (and hence user) did not exist
+            IgnoreList.AddNewRoom(room.room_id) #create empty room entry
+        return False # we fell through the for loop looking for user, this is always false
+
     def handle_message(self, room, event): # this is where the ignore check should really take place
         # Make sure we didn't send this message
         if re.match("@" + self.username, event['sender']):
             return
-
+        if MatrixBotAPI.CheckIgnoreSender(room, event['sender']) == True:
+            return
+        
         # Loop through all installed handlers and see if they need to be called
         for handler in self.handlers:
             if handler.test_callback(room, event):
@@ -79,3 +95,5 @@ class MatrixBotAPI:
         # Starts polling for messages
         self.client.start_listener_thread()
         return self.client.sync_thread
+
+    

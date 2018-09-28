@@ -2,3 +2,4 @@ username: username
 password: password
 server: https://matrix.org
 ignorelist: IgnoredUsers
+helpfile: CommandHelp.md

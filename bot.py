@@ -8,12 +8,19 @@ from matrix_bot_api.matrix_bot_api import MatrixBotAPI
 from matrix_bot_api.mregex_handler import MRegexHandler
 from matrix_bot_api.mcommand_handler import MCommandHandler
 from IgnoreList import *
+from HelpList import *
 
 script_dir = os.path.dirname(__file__) # Absolute path to this script
-config = yaml.safe_load(open(script_dir + "config.yml"))
+config = yaml.safe_load(open(os.path.join(script_dir, "config.yml")))
 USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
+HELPFILE = config['helpfile']
+
+def help_callback(room, event):
+    # provide user with list of usable commands
+    helpContents = GetHelpContents(os.path.join(script_dir, HELPFILE))
+    room.send_text(helpContents)
 
 def hi_callback(room, event):
     # Somebody said hi, let's say Hi back
@@ -95,6 +102,9 @@ def main():
 
     ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
     bot.add_handler(ignoreUser_handler)
+
+    help_handler = MCommandHandler("Help", help_callback)
+    bot.add_handler(help_handler)
 
     # Start polling
     bot.start_polling()
