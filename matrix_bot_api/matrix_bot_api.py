@@ -51,7 +51,7 @@ class MatrixBotAPI:
     def add_handler(self, handler):
         self.handlers.append(handler)
 
-    def CheckIgnoreSender(room, sender):
+    def CheckIgnoreSender(self, room, sender):
         allIgnored = IgnoreList.GetGlobalIgnoreList()
         roomExists = False
         for roomIgnore in allIgnored: # find this room from all rooms
@@ -68,7 +68,7 @@ class MatrixBotAPI:
         # Make sure we didn't send this message
         if re.match("@" + self.username, event['sender']):
             return
-        if MatrixBotAPI.CheckIgnoreSender(room, event['sender']) == True:
+        if self.CheckIgnoreSender(room, event['sender']) == True:
             return
         
         # Loop through all installed handlers and see if they need to be called
