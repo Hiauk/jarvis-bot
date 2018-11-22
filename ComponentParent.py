@@ -1,9 +1,12 @@
-class Component:    
+class Component():
+    __implementedFunctions = ["Start", "Update"]
     def __init__(self, componentChild):
-        self.child = componentChild
-        Component.__implementedFunctions = ["Start", "Update"]
+        self.child = componentChild        
 
-    
+    @staticmethod # returns a list of functions that the component parent checks its child implementations for
+    def GetImplementableFunctionsList():
+        return Component.__implementedFunctions
+
     ## Returns: A dictionary containing function names against callable functions from the object, the function value is 'None' if not callable on the object
     ##          dictionary = {functionName, functionReference} e.g. {"Start", Start()}
     def GetCallableFunctions(self):
