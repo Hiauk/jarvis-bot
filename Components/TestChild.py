@@ -8,4 +8,11 @@ class childComponent(Component):
         print("TestChild - Start")
 
     def Update(self):
-        print("TestChild - Update")
+        pass
+        #print("TestChild - Update")
+    
+    def OnMessageReceived(self, room, event):
+        print("room: " + str(room) + "\tevent: " + str(event))
+    
+    def OnCommandReceived(self, room, event):
+        pass

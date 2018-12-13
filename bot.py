@@ -3,10 +3,13 @@ from random import randint
 
 import requests, os, bs4
 import yaml
+from BotModules import BotModules
 
 from matrix_bot_api.matrix_bot_api import MatrixBotAPI
 from matrix_bot_api.mregex_handler import MRegexHandler
 from matrix_bot_api.mcommand_handler import MCommandHandler
+from matrix_bot_api.mcomponent_handler import MComponentHandler
+
 from IgnoreList import *
 from HelpList import *
 
@@ -16,6 +19,15 @@ USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
 HELPFILE = config['helpfile']
+
+botModules = BotModules()
+
+def component_callback(room, event): 
+    # Check for message
+    if(event['type'] == "m.room.message"):
+        botModules.CallMethodOnAll("OnMessageReceived", room, event)    
+        if(event['content']['body'][0] == '!'): # Test for Command
+            botModules.CallMethodOnAll("OnCommandReceived", room, event)       
 
 def help_callback(room, event):
     # provide user with list of usable commands
@@ -88,6 +100,11 @@ def main():
     # Create an instance of the MatrixBotAPI
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
 
+    botModules.LoadClasses("H:\Programming\PythonStuff\Jarvis\Components")
+    botModules.CallMethodOnAll("Start")    
+    componentHandler = MComponentHandler(component_callback)
+    bot.add_handler(componentHandler) # adds component handler that deals with call events at correct time for all components
+
     hi_handler = MRegexHandler("Hi", hi_callback)
     bot.add_handler(hi_handler)
 
@@ -112,6 +129,7 @@ def main():
     # Infinitely read stdin to stall main thread while the bot runs in other threads
     go = True
     while go:
+        botModules.CallMethodOnAll("Update")
         go = True
 
 if __name__ == "__main__":

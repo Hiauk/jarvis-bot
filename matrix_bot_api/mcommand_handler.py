@@ -20,7 +20,7 @@ class MCommandHandler(MHandler):
     def test_command(self, room, event):        
         # Test the message to see if it has our command
         if event['type'] == "m.room.message":
-            #if re.match(self.cmd_char + self.command, event['content']['body']):
-            if(event['content']['body'][0] == self.cmd_char) # if the first character in the message is a command character, handle the message
+            if re.match(self.cmd_char + self.command, event['content']['body']):
+            #if(event['content']['body'][0] == self.cmd_char) # if the first character in the message is a command character, handle the message
                 return True
         return False

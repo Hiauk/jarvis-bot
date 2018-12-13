@@ -1,22 +1,21 @@
 from ComponentParent import Component
 
-class childComponent(Component):
+class Parrot(Component):
     def __init__(self):
         Component.__init__(self, self)
 
     def Start(self):
-        print("Child - Start")
-
-class notAChild():
-    def __init__(self):
+        print("Parrot - Start")
+    
+    def Update(self):
         pass
-
-    def Start(self):
-        print("Child - Start")
-
-class anotherChildComponent(Component):
-    def __init__(self):
-        Component.__init__(self, self)
-
-    def Start(self):
-        print("anotherChild - Start")
+    
+    def OnMessageReceived(self, room, event):
+        pass
+    
+    def OnCommandReceived(self, room, event):        
+        args = event['content']['body'].split()
+        commandCharRemoved = args[0][1:] #args[0].
+        args.pop(0)
+        if(commandCharRemoved == "Parrot"):
+            room.send_text(' '.join(args))

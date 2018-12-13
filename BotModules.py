@@ -1,11 +1,13 @@
 from ComponentLoader import ComponentContainer
 from ComponentParent import Component
+#from Components.TestChild import childComponent
 
 class BotModules():
     def __init__(self):
         #self.componentContainers = {} # dictionary containing a folder path against a ComponentContainer
         #self.classContainers = {} # dictionary containing instantable class definitions for loaded 
         self.moduleContainer = []
+        # Initialise function container with the names of all the potential functions as defined by Component
         self.functionContainer = {} # {functionName, function} - {"Update" : Update()}
         for methodName in Component.GetImplementableFunctionsList():
             self.functionContainer.update({methodName : []})
@@ -28,9 +30,9 @@ class BotModules():
     def Instantiate(module):
         pass
 
-    def CallMethodOnAll(self, methodName):
-        for aFunction in self.functionContainer[methodName]:
-            aFunction()
+    def CallMethodOnAll(self, name, *args):
+        for aFunction in self.functionContainer[name]:
+            aFunction(*args)
 
 class Module():
     def __init__(self, filePath, name, classDefinition):
@@ -41,4 +43,7 @@ class Module():
 #Testing code
 #botModules = BotModules()
 #botModules.LoadClasses("H:\\Programming\\PythonStuff\\python_componentpattern\\Components")
-#botModules.CallMethodOnAll("Start")
+#botModules.CallMethodOnAll("OnMessageReceived", "aRoom!", "anEvent!")
+
+#component = Component.GetComponent(childComponent) # also enable class load at top of script
+#component.Start()
