@@ -4,8 +4,6 @@ from ComponentParent import Component
 
 class BotModules():
     def __init__(self):
-        #self.componentContainers = {} # dictionary containing a folder path against a ComponentContainer
-        #self.classContainers = {} # dictionary containing instantable class definitions for loaded 
         self.moduleContainer = []
         # Initialise function container with the names of all the potential functions as defined by Component
         self.functionContainer = {} # {functionName, function} - {"Update" : Update()}
@@ -25,10 +23,6 @@ class BotModules():
             for functionName in callableFunctions.keys():
                 if(callableFunctions[functionName] != None):
                     self.functionContainer[functionName].append(callableFunctions[functionName])
-    
-    @staticmethod
-    def Instantiate(module):
-        pass
 
     def CallMethodOnAll(self, name, *args):
         for aFunction in self.functionContainer[name]:
