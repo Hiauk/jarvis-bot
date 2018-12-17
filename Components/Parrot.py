@@ -3,15 +3,6 @@ from ComponentParent import Component
 class Parrot(Component):
     def __init__(self):
         Component.__init__(self, self)
-
-    def Start(self):
-        print("Parrot - Start")
-    
-    def Update(self):
-        pass
-    
-    def OnMessageReceived(self, room, event):
-        pass
     
     def OnCommandReceived(self, room, event):        
         args = event['content']['body'].split()
