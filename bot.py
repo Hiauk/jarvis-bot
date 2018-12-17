@@ -19,6 +19,8 @@ USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
 HELPFILE = config['helpfile']
+ERRORLOG = config['errorlog']
+COMPONENTSFOLDER = config['componentspath']
 
 botModules = BotModules()
 
@@ -33,17 +35,6 @@ def help_callback(room, event):
     # provide user with list of usable commands
     helpContents = GetHelpContents(os.path.join(script_dir, HELPFILE))
     room.send_text(helpContents)
-
-def hi_callback(room, event):
-    # Somebody said hi, let's say Hi back
-    room.send_text("Hi, " + event['sender'])
-
-def echo_callback(room, event):
-    args = event['content']['body'].split()
-    args.pop(0)
-    
-    # Echo what they said back
-    room.send_text(' '.join(args))
 
 def weather_callback(room, event):
     url = 'https://www.bbc.co.uk/weather/2643743'
@@ -100,17 +91,13 @@ def main():
     # Create an instance of the MatrixBotAPI
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
 
-    botModules.LoadClasses("H:\Programming\PythonStuff\Jarvis\Components")
+    #botModules.LoadClasses("H:\Programming\PythonStuff\Jarvis\Components")
+    botModules.LoadClasses(os.path.join(script_dir, COMPONENTSFOLDER))
+    
     botModules.CallMethodOnAll("Start")    
     componentHandler = MComponentHandler(component_callback)
     bot.add_handler(componentHandler) # adds component handler that deals with call events at correct time for all components
-
-    hi_handler = MRegexHandler("Hi", hi_callback)
-    bot.add_handler(hi_handler)
-
-    echo_handler = MCommandHandler("echo", echo_callback)
-    bot.add_handler(echo_handler)
-
+    
     weather_handler = MCommandHandler("weather", weather_callback)
     bot.add_handler(weather_handler)
 

@@ -71,7 +71,7 @@ class ComponentContainer():
 
                 for n in node.names:
                     # if the import node matches as version of: from ComponentParent import Component
-                    if(module[0] == ComponentContainer.componentScriptName and n.name.split('.')[0] == ComponentContainer.componentClassName): 
+                    if(len(module) > 0 and module[0] == ComponentContainer.componentScriptName and n.name.split('.')[0] == ComponentContainer.componentClassName): 
                         parentImportInfo = Import(module[0], n.name.split('.')[0], n.asname) # create tuple from this node
             ## if the component import node was found in this script, find all the instances in the classNodes we found that implement 'Component'
             if(parentImportInfo != None): 
