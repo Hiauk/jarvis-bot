@@ -22,10 +22,14 @@ HELPFILE = config['helpfile']
 ERRORLOG = config['errorlog']
 COMPONENTSFOLDER = config['componentspath']
 
+botName = ("@" + USERNAME + ":" + SERVER.split("//")[1]).lower() # @ + MyBot + https://matrix.org = '@mybot:matrix.org' - this is the username within channel
 botModules = BotModules()
 
 def component_callback(room, event): 
-    # Check for message
+    if(event['sender'] == botName): #if event sender is ourselves, ignore completely
+        return
+
+    # Check that this is a message
     if(event['type'] == "m.room.message"):
         botModules.CallMethodOnAll("OnMessageReceived", room, event)    
         if(event['content']['body'][0] == '!'): # Test for Command
@@ -97,7 +101,7 @@ def main():
     botModules.CallMethodOnAll("Start")    
     componentHandler = MComponentHandler(component_callback)
     bot.add_handler(componentHandler) # adds component handler that deals with call events at correct time for all components
-    
+
     weather_handler = MCommandHandler("weather", weather_callback)
     bot.add_handler(weather_handler)
 
