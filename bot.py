@@ -40,16 +40,6 @@ def help_callback(room, event):
     helpContents = GetHelpContents(os.path.join(script_dir, HELPFILE))
     room.send_text(helpContents)
 
-def weather_callback(room, event):
-    url = 'https://www.bbc.co.uk/weather/2643743'
-
-    res = requests.get(url)
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text,features="html.parser")
-    temp = soup.select('.wr-value--temperature--c')
-    desc = soup.select('.wr-js-day-content-weather-type-description')
-    room.send_text('In London it is currently: ' + temp[0].getText() + ' - ' + desc[0].getText())
-
     #TODO: Tie command functionality into user power levels
 def IgnoreUser_callback(room, event):
     args = event['content']['body'].split() #TODO: Data validation / input hardening
@@ -73,9 +63,6 @@ def main():
     componentHandler = MComponentHandler(component_callback)
     bot.add_handler(componentHandler) # adds component handler that deals with call events at correct time for all components
 
-    weather_handler = MCommandHandler("weather", weather_callback)
-    bot.add_handler(weather_handler)
-    
     ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
     bot.add_handler(ignoreUser_handler)
 
