@@ -1,4 +1,5 @@
 from ComponentParent import Component
+from ComponentParent import Config
 import ast
 import inspect
 import os, importlib, re, sys
@@ -7,9 +8,10 @@ from collections import namedtuple
 class ComponentContainer():
     componentScriptName = "ComponentParent"
     componentClassName = "Component"
-    def __init__(self, folderPath, folderName):
+    def __init__(self, folderPath, folderName, configPath):
+        Config.configPath = configPath # set the system path that loaded components draw their config files from
         self.components = {} # dictionary containing uninitialised script.class names (ChildScript.ChildClass) against a list of uninitalised class objects that implement 'ComponentParent.Component' and were pulled from that script
-        self.GetComponentsFromScripts(folderPath, folderName)
+        self.GetComponentsFromScripts(folderPath, folderName)        
 
     def GetComponentsFromScripts(self, folderPath, folderName):
         pysearchre = re.compile('.py$', re.IGNORECASE) # create folder filter that get all .py files
@@ -64,7 +66,7 @@ class ComponentContainer():
                 # check for import definition nodes
                 if isinstance(node, ast.Import): 
                     module = []
-                elif isinstance(node, ast.ImportFrom):  
+                elif isinstance(node, ast.ImportFrom):
                     module = node.module.split('.')
                 else:
                     continue

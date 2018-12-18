@@ -11,10 +11,10 @@ class BotModules():
             self.functionContainer.update({methodName : []})
     
     # creates a new component container from the scripts in the given folderPath and loads ut into self.componentContainers
-    def LoadClasses(self, folderPath):
+    def LoadClasses(self, folderPath, configPath):
         folderName = folderPath.split('\\') # seperate out the folder name from the path
         folderName = folderName[len(folderName)-1]
-        newContainer = ComponentContainer(folderPath, folderName)
+        newContainer = ComponentContainer(folderPath, folderName, configPath)
         for aComponent in newContainer.components.values():
             newComponent = aComponent() # Init a Child component
             callableFunctions = newComponent.GetCallableFunctions()

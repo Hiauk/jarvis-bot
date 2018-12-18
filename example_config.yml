@@ -2,6 +2,5 @@ username: username
 password: password
 server: https://matrix.org
 ignorelist: IgnoredUsers
-helpfile: CommandHelp.md
 errorlog: ErrorLog.md
 componentspath: C:/Bot/Components | { os.path.dirname(__file__)/}Components

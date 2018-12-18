@@ -1,7 +1,7 @@
 import random
 from random import randint
 
-import requests, os, bs4
+import os
 import yaml
 from BotModules import BotModules
 
@@ -11,14 +11,12 @@ from matrix_bot_api.mcommand_handler import MCommandHandler
 from matrix_bot_api.mcomponent_handler import MComponentHandler
 
 from IgnoreList import *
-from HelpList import *
 
 script_dir = os.path.dirname(__file__) # Absolute path to this script
 config = yaml.safe_load(open(os.path.join(script_dir, "config.yml")))
 USERNAME = config['username']
 PASSWORD = config['password']
 SERVER = config['server']
-HELPFILE = config['helpfile']
 ERRORLOG = config['errorlog']
 COMPONENTSFOLDER = config['componentspath']
 
@@ -34,11 +32,6 @@ def component_callback(room, event):
         botModules.CallMethodOnAll("OnMessageReceived", room, event)    
         if(event['content']['body'][0] == '!'): # Test for Command
             botModules.CallMethodOnAll("OnCommandReceived", room, event)       
-
-def help_callback(room, event):
-    # provide user with list of usable commands
-    helpContents = GetHelpContents(os.path.join(script_dir, HELPFILE))
-    room.send_text(helpContents)
 
     #TODO: Tie command functionality into user power levels
 def IgnoreUser_callback(room, event):
@@ -57,7 +50,8 @@ def main():
     bot = MatrixBotAPI(USERNAME, PASSWORD, SERVER)
 
     #botModules.LoadClasses("H:\Programming\PythonStuff\Jarvis\Components")
-    botModules.LoadClasses(os.path.join(script_dir, COMPONENTSFOLDER))
+    componentFolderPath = os.path.join(script_dir, COMPONENTSFOLDER)
+    botModules.LoadClasses(componentFolderPath, componentFolderPath) #give path to Components folder and path to Component config folder
     
     botModules.CallMethodOnAll("Start") # Call start function on all loaded components
     componentHandler = MComponentHandler(component_callback)
@@ -65,9 +59,6 @@ def main():
 
     ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
     bot.add_handler(ignoreUser_handler)
-
-    help_handler = MCommandHandler("Help", help_callback)
-    bot.add_handler(help_handler)
 
     # Start polling
     bot.start_polling()
