@@ -12,7 +12,7 @@ class BotModules():
     
     # creates a new component container from the scripts in the given folderPath and loads ut into self.componentContainers
     def LoadClasses(self, folderPath, configPath):
-        folderName = folderPath.split('\\') # seperate out the folder name from the path
+        folderName = os.path.split(folderPath) # seperate out the folder name from the path
         folderName = folderName[len(folderName)-1]
         newContainer = ComponentContainer(folderPath, folderName, configPath)
         for aComponent in newContainer.components.values():

@@ -2,7 +2,7 @@
 import pickle, os, yaml
 
 script_dir = os.path.dirname(__file__) # Absolute path to this script
-config = yaml.safe_load(open(script_dir + "\config.yml"))
+config = yaml.safe_load(open(os.path.join(script_dir, 'config.yml')))
 ignoreListName = config['ignorelist']
 
 class IgnoreList:
@@ -11,12 +11,12 @@ class IgnoreList:
         self.roomID = roomID
         self.ignoredUsers = ignoredUsers
     def LoadIgnoreList():
-        unpicklefile = open(script_dir + "\\" + ignoreListName + ".pkl", 'rb')
+        unpicklefile = open(os.path.join(script_dir, ignoreListName + '.pkl'), 'rb')
         IgnoreList.GlobalIgnoreLists = pickle.load(unpicklefile)
         unpicklefile.close()
 
     def SaveIgnoreList():
-        file = open(script_dir + "\\" + ignoreListName + ".pkl", 'wb')
+        file = open(os.path.join(script_dir, ignoreListName + '.pkl'), 'wb')
         pickle.dump(IgnoreList.GlobalIgnoreLists,file)
         file.close()
 
@@ -42,7 +42,7 @@ class IgnoreList:
         return IgnoreList.GlobalIgnoreLists
 
 # Should this go in bot.py, maybe create a seperate config Init file?
-fileExists = os.path.isfile(script_dir + "\\" + ignoreListName + ".pkl");
+fileExists = os.path.isfile(os.path.join(script_dir, ignoreListName + '.pkl'))
 if fileExists == False:
     IgnoreList.SaveIgnoreList() # generate a blank pickle file
 else:

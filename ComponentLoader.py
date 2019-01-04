@@ -55,7 +55,7 @@ class ComponentContainer():
         parentImportInfo = None
         componentDict = {}
         for script in scriptNames:
-            f=open(folderPath + '\\' + script,'r') # read in entire file
+            f=open(os.path.join(folderPath, script),'r') # read in entire file
             p = ast.parse(f.read()) # parse through ast to get syntax tree
             #classes = [node.name for node in ast.walk(p) if isinstance(node, Component)] # walk through the syntax tree and extract all the class definitions
             classNodes = []
