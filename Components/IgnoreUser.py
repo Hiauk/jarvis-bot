@@ -58,7 +58,7 @@ class Ignore(Component):
         
     
     def GetGlobalIgnoreList(self):
-        return self.GlobalIgnoreLists
+        return self.globalIgnoreLists
 
     def ProcessCommand(self, room, event):
         args = event['content']['body'].split() #TODO: Data validation / input hardening
