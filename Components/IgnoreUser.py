@@ -78,5 +78,5 @@ class Ignore(Component):
         args = event['content']['body'].split()
         commandCharRemoved = args[0][1:] #args[0].
         args.pop(0)
-        if(commandCharRemoved == "Ignore"):
+        if(commandCharRemoved == "IgnoreUser"):
             self.ProcessCommand(room, event)
