@@ -5,7 +5,7 @@ class Weather(Component):
     def __init__(self):
         Component.__init__(self, self)    
 
-    def postcode_picker(var):
+    def postcode_picker(self, var):
         switcher = {
             'AB1':'Aberdeen',
             'AB2':'Aberdeen',
