@@ -550,7 +550,7 @@ class Weather(Component):
             'CM6':'Great Dunmow, Felsted',
             'CM7':'Braintree',
             'CM8':'Witham',
-            'CM9':'Maldon, Tollesbury, Tolleshunt D'Arcy, Tolleshunt Knights',
+            'CM9':'Maldon, Tollesbury, Tolleshunt DArcy, Tolleshunt Knights',
             'CM11':'Billericay (East), Great Burstead',
             'CM12':'Billericay (West)',
             'CM13':'Brentwood, East Horndon, Great Warley, Herongate, Hutton, Ingrave, Little Warley, West Horndon',
