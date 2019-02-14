@@ -5,3 +5,7 @@
 !echo       - The bot will repeat a given phrase.
 	Format  - !echo {PHRASE}
 	Example - !echo Hello Everyone!
+
+!train      - The bot will return information about the next few trains
+    Format  - !train {DEPARTING_STATION} {ARRIVING_STATION}
+    Example - !train ECR REI
