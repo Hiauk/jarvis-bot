@@ -1671,7 +1671,7 @@ class Weather(Component):
             'M3':'Manchester City Centre, Blackfriars, Trinity',
             'M4':'Ancoats, Northern Quarter, Strangeways',
             'M5':'Ordsall, Seedley, Weaste, University',
-            'M6':'Claremont, Irlams O' Th' Height, Charlestown, Whitlane',
+            'M6':'Claremont, Charlestown, Whitlane',
             'M7':'Higher Broughton, Cheetwood, Lower Broughton, Kersal',
             'M8':'Crumpsall, Cheetham Hill',
             'M9':'Harpurhey, Blackley',
