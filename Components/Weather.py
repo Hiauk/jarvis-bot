@@ -3126,7 +3126,7 @@ class Weather(Component):
 
         postcode = args[1]
 
-        url = 'https://www.bbc.co.uk/weather/0/' + postcode
+        url = 'https://www.bbc.co.uk/weather/0/' + postcode.lower()
 
         res = requests.get(url)
         res.raise_for_status()
