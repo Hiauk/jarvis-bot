@@ -3133,7 +3133,7 @@ class Weather(Component):
         soup = bs4.BeautifulSoup(res.text,features="html.parser")
         temp = soup.select('.wr-value--temperature--c')
         desc = soup.select('.wr-js-day-content-weather-type-description')
-        room.send_text('In ' + postcode_picker(postcode) + ' it is currently: ' + temp[0].getText() + ' - ' + desc[0].getText())
+        room.send_text('In ' + self.postcode_picker(postcode) + ' it is currently: ' + temp[0].getText() + ' - ' + desc[0].getText())
 
     def OnCommandReceived(self, room, event):
         args = event['content']['body'].split()
