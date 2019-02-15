@@ -69,7 +69,7 @@ class ComponentContainer():
                 elif isinstance(node, ast.ImportFrom):
                     module = node.module.split('.')
                 else:
-                    continue
+                    continue # this is not an import definition, skip to next item in the syntax tree
 
                 for n in node.names:
                     # if the import node matches as version of: from ComponentParent import Component
