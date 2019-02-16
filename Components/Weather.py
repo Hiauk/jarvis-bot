@@ -11,7 +11,7 @@ class Weather(Component):
         postcode = args[1]
 
         url = 'https://www.bbc.co.uk/weather/0/' + postcode.lower()
-        api_call = requests.get('api.postcodes.io/outcodes/' + postcode.lower())
+        api_call = requests.get('http://api.postcodes.io/outcodes/' + postcode.lower())
         json_data = json.loads(api_call)
 
         res = requests.get(url)
