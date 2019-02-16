@@ -12,14 +12,14 @@ class Weather(Component):
 
         url = 'https://www.bbc.co.uk/weather/0/' + postcode.lower()
         api_call = requests.get('http://api.postcodes.io/outcodes/' + postcode.lower())
-        json_data = json.loads(api_call)
+        info = api_call.json()
 
         res = requests.get(url)
         res.raise_for_status()
         soup = bs4.BeautifulSoup(res.text,features="html.parser")
         temp = soup.select('.wr-value--temperature--c')
         desc = soup.select('.wr-js-day-content-weather-type-description')
-        room.send_text('In ' + json_data['result']['admin_district'] + ' it is currently: ' + temp[0].getText() + ' - ' + desc[0].getText())
+        room.send_text('In ' + ", ".join(info['result']['admin_ward']) + ' it is currently: ' + temp[0].getText() + ' - ' + desc[0].getText())
 
     def OnCommandReceived(self, room, event):
         args = event['content']['body'].split()
