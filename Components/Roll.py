@@ -1,4 +1,5 @@
 from ComponentParent import Component
+import random
 
 class Roll(Component):
     def __init__(self):
@@ -9,8 +10,8 @@ class Roll(Component):
 
         dice = args[1]
         info = dice.split("d")
-        
-        room.send_text('Rolling: ' + info[0] + ' ' + info[1] + ' sided dice')
+        for x in range(int(info[0])):
+            room.send_text(random.randint(1,int(info[1] + 1)))
 
     def OnCommandReceived(self, room, event):
         args = event['content']['body'].split()
