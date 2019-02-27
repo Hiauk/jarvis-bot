@@ -37,9 +37,10 @@ class Module():
         self.callableFunctions = {}
 
 #Testing code
-#botModules = BotModules()
-#botModules.LoadClasses("H:\\Programming\\PythonStuff\\python_componentpattern\\Components")
-#botModules.CallMethodOnAll("OnMessageReceived", "aRoom!", "anEvent!")
+botModules = BotModules()
+botModules.LoadClasses("H:\\Programming\\PythonStuff\\Jarvis\\Test", "H:\\Programming\\PythonStuff\\Jarvis\\Test")
+print("Start")
+botModules.CallMethodOnAll("Start")
 
 #component = Component.GetComponent(childComponent) # also enable class load at top of script
 #component.Start()
