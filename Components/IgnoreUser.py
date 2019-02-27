@@ -1,11 +1,10 @@
-from ComponentParent import Component
-from ComponentParent import Config
+from BehaviourComponent import BehaviourComponent
 import pickle, os, yaml
 
-class Ignore(Component):
+class Ignore(BehaviourComponent):
     defaultDataFile = "IgnoreUserData.pkl" # default name for the file storing ignore data
     def __init__(self):
-        Component.__init__(self, self)
+        BehaviourComponent.__init__(self, self)
 
     def Start(self):
         self.IgnoreData = self.config.GetKey("ignoredata") # get path to helpfile        

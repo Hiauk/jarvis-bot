@@ -1,8 +1,8 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 
-class ChildComponent(Component):
+class ChildComponent(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)
+        BehaviourComponent.__init__(self, self)
 
     def Start(self):
         print("TestChild - Start")

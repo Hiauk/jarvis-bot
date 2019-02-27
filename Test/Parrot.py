@@ -1,5 +1,4 @@
 from BehaviourComponent import BehaviourComponent
-from ComponentParent import Component as Comp
 
 class Parrot(BehaviourComponent):
     def __init__(self):
@@ -14,7 +13,3 @@ class Parrot(BehaviourComponent):
         args.pop(0)
         if(commandCharRemoved == "Parrot"):
             room.send_text(' '.join(args))
-
-class SecondClass(Comp):
-    def __init__(self):
-        Comp.__init__(self, self)

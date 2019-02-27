@@ -1,8 +1,8 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 
-class Parrot(Component):
+class Parrot(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)
+        BehaviourComponent.__init__(self, self)
     
     def OnCommandReceived(self, room, event):        
         args = event['content']['body'].split()

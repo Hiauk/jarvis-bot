@@ -1,11 +1,10 @@
-from ComponentParent import Component
-from ComponentParent import Config
+from BehaviourComponent import BehaviourComponent
 import os
 
-class Help(Component):
+class Help(BehaviourComponent):
     defaultHelpFileName = "CommandHelp.md"
     def __init__(self):
-        Component.__init__(self, self)
+        BehaviourComponent.__init__(self, self)
 
     def Start(self):
         self.helpPath = self.config.GetKey("helpfile") # get path to helpfile

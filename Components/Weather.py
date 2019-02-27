@@ -1,9 +1,9 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 import requests, bs4, json
 
-class Weather(Component):
+class Weather(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)    
+        BehaviourComponent.__init__(self, self)    
 
     def GetWeatherInfo(self, room, event):
         args = event['content']['body'].split()

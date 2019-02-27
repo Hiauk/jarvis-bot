@@ -1,9 +1,9 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 import re
 
-class HiResponse(Component):
+class HiResponse(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)
+        BehaviourComponent.__init__(self, self)
     
     def OnMessageReceived(self, room, event):
         if re.search("Hi ", event['content']['body']):

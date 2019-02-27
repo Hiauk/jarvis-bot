@@ -1,5 +1,3 @@
-from ComponentParent import Component
-from ComponentParent import Config
 from InheritanceFinder import InheritanceFinder
 import ast
 import inspect
@@ -10,7 +8,7 @@ class ComponentContainer():
     componentScriptName = "BaseComponent"
     componentClassName = "BaseComponent"
     def __init__(self, folderPath, folderName, configPath):
-        Config.configPath = configPath # set the system path that loaded components draw their config files from
+        self.configPath = configPath # set the system path that loaded components draw their config files from
         self.components = {} # dictionary containing uninitialised script.class names (ChildScript.ChildClass) against a list of uninitalised class objects that implement 'ComponentParent.Component' and were pulled from that script
         self.GetComponentsFromScripts(folderPath, folderName)        
 
