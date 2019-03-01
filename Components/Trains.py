@@ -1,9 +1,9 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 import requests, bs4
 
-class Train(Component):
+class Train(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)    
+        BehaviourComponent.__init__(self, self)    
 
     def GetTrainInfo(self, room, event):
         args = event['content']['body'].split()

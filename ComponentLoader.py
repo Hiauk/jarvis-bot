@@ -1,15 +1,14 @@
-from ComponentParent import Component
-from ComponentParent import Config
+from InheritanceFinder import InheritanceFinder
 import ast
 import inspect
 import os, importlib, re, sys
 from collections import namedtuple
 
 class ComponentContainer():
-    componentScriptName = "ComponentParent"
-    componentClassName = "Component"
+    componentScriptName = "BaseComponent"
+    componentClassName = "BaseComponent"
     def __init__(self, folderPath, folderName, configPath):
-        Config.configPath = configPath # set the system path that loaded components draw their config files from
+        self.configPath = configPath # set the system path that loaded components draw their config files from
         self.components = {} # dictionary containing uninitialised script.class names (ChildScript.ChildClass) against a list of uninitalised class objects that implement 'ComponentParent.Component' and were pulled from that script
         self.GetComponentsFromScripts(folderPath, folderName)        
 
@@ -50,43 +49,11 @@ class ComponentContainer():
         classes = [node.name for node in ast.walk(p) if isinstance(node, ast.ClassDef)] # walk through the syntax tree and extract all the class definitions
         return classes
     
-    def CheckScriptsForComponents(self, folderPath, scriptNames):
-        Import = namedtuple("Import", ["module", "name", "alias"]) # declare a tuple to contain returned import nodes
-        parentImportInfo = None
+    def CheckScriptsForComponents(self, folderPath, scriptNames):        
         componentDict = {}
+        parentFinder = InheritanceFinder()
         for script in scriptNames:
-            f=open(os.path.join(folderPath, script),'r') # read in entire file
-            p = ast.parse(f.read()) # parse through ast to get syntax tree
-            #classes = [node.name for node in ast.walk(p) if isinstance(node, Component)] # walk through the syntax tree and extract all the class definitions
-            classNodes = []
-            module = []
-            for node in ast.walk(p):
-                if(isinstance(node, ast.ClassDef)): # if the node is a class definition node
-                    classNodes.append(node) # add it to our definitions list
-                # check for import definition nodes
-                if isinstance(node, ast.Import): 
-                    module = []
-                elif isinstance(node, ast.ImportFrom):
-                    module = node.module.split('.')
-                else:
-                    continue
-
-                for n in node.names:
-                    # if the import node matches as version of: from ComponentParent import Component
-                    if(len(module) > 0 and module[0] == ComponentContainer.componentScriptName and n.name.split('.')[0] == ComponentContainer.componentClassName): 
-                        parentImportInfo = Import(module[0], n.name.split('.')[0], n.asname) # create tuple from this node
-            ## if the component import node was found in this script, find all the instances in the classNodes we found that implement 'Component'
-            if(parentImportInfo != None): 
-                ## Set the Alias for the component library within this script
-                componentClassAlias = ComponentContainer.componentClassName
-                if(parentImportInfo.alias != None): # if there is an alias for the imported library i.e. from ComponentParent import Component as X
-                    componentClassAlias = parentImportInfo.alias
-                
-                childClasses = []
-                for node in classNodes: # loop through all the captured class nodes
-                    for n in node.bases: # check their base classes
-                        if(n.id == componentClassAlias): # if they have the Component library as a parent, capture that classes
-                            childClasses.append(node.name)
-                componentDict.update({ script.split('.')[0] : childClasses }) # add the list of capture childClasses to a dictionary against the script they were from
-
+            parentFinder.LoadScript(os.path.join(folderPath, script))
+            childClasses = parentFinder.FindChildren(ComponentContainer.componentClassName)
+            componentDict.update({ script.split('.')[0] : childClasses }) # add the list of capture childClasses to a dictionary against the script they were from
         return componentDict

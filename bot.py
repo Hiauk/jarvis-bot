@@ -57,8 +57,8 @@ def main():
     componentHandler = MComponentHandler(component_callback)
     bot.add_handler(componentHandler) # adds component handler that deals with call events at correct time for all components
 
-    ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
-    bot.add_handler(ignoreUser_handler)
+    #ignoreUser_handler = MCommandHandler("ignoreUser", IgnoreUser_callback)
+    #bot.add_handler(ignoreUser_handler)
 
     # Start polling
     bot.start_polling()
