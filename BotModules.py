@@ -1,6 +1,5 @@
 import os
 from ComponentLoader import ComponentContainer
-#from Components.TestChild import childComponent
 
 class BotModules():
     def __init__(self):
@@ -29,17 +28,16 @@ class BotModules():
         for aFunction in self.functionContainer[name]:
             aFunction(*args)
 
+    
+
 class Module():
-    def __init__(self, filePath, name, classDefinition):
+    def __init__(self, filePath, name, classType, classDefinition):
         self.filePath = filePath
         self.name = name
+        self.classType = classType
         self.callableFunctions = {}
 
 #Testing code
-botModules = BotModules()
-botModules.LoadClasses("H:\\Programming\\PythonStuff\\Jarvis\\Test", "H:\\Programming\\PythonStuff\\Jarvis\\Test")
-print("Start")
-botModules.CallMethodOnAll("Start")
-
-#component = Component.GetComponent(childComponent) # also enable class load at top of script
-#component.Start()
+#botModules = BotModules()
+#botModules.LoadClasses("H:\\Programming\\PythonStuff\\Jarvis\\Test", "H:\\Programming\\PythonStuff\\Jarvis\\Test")
+#botModules.CallMethodOnAll("Start")

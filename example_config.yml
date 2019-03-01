@@ -1,6 +1,5 @@
 username: username
 password: password
 server: https://matrix.org
-ignorelist: IgnoredUsers
-errorlog: ErrorLog.md
-componentspath: C:/Bot/Components | { os.path.dirname(__file__)/}Components
+errorlog: ErrorLog.md # Name of Text file errors will be logged to
+componentspath: Components # Name of folder in same path as bot.py containing component scripts
