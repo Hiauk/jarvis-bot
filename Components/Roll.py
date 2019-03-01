@@ -1,9 +1,9 @@
-from ComponentParent import Component
+from BehaviourComponent import BehaviourComponent
 import random
 
-class Roll(Component):
+class Roll(BehaviourComponent):
     def __init__(self):
-        Component.__init__(self, self)    
+        BehaviourComponent.__init__(self, self)    
 
     def Roll(self, room, event):
         args = event['content']['body'].split()
